@@ -1,5 +1,5 @@
 ﻿using System;
-using Board;
+using GameBoard;
 
 namespace ChessmateConsole
 {
@@ -7,9 +7,7 @@ namespace ChessmateConsole
     {
         static void Main(string[] args)
         {
-            Position P = new Position(3, 4);
-
-            Console.WriteLine(P);
+            Board board = new Board(8, 8);
             Console.ReadKey();
         }
     }
