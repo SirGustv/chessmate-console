@@ -17,5 +17,12 @@ namespace GameBoard
         {
             return Pieces[line, column];
         }
+
+        //Adiciona peça no tabuleiro
+        public void AddPiece(Piece p, Position pos)
+        {
+            Pieces[pos.Line, pos.Column] = p;
+            p.Position = pos;
+        }
     }
 }

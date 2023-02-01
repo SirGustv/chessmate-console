@@ -7,12 +7,12 @@ namespace GameBoard
         public Board Board { get; set; }
         public int NmbrOfMoves { get; set; }
 
-        public Piece(Position position, Color color, Board board)
+        public Piece(Color color, Board board)
         {
-            this.Position = position;
+            this.Position = null; //Posição inicial a ser definida pela classe 'Board'
             this.Color = color;
             this.Board = board;
-            this.NmbrOfMoves = 0;
+            this.NmbrOfMoves = 0; //Contador de movimentos de cada peça instânciada
         }
     }
 }
