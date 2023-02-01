@@ -1,6 +1,7 @@
 ﻿using System;
 using GameBoard;
 using Chessmate;
+using GameBoard.Excepitions;
 
 namespace ChessmateConsole
 {
@@ -8,13 +9,22 @@ namespace ChessmateConsole
     {
         static void Main(string[] args)
         {
-            Board board = new Board(8, 8);
+            Console.Clear();
 
-            board.AddPiece(new Tower(Color.Black, board), new Position(0, 0));
-            board.AddPiece(new King(Color.Black, board), new Position(2, 4));
+            try
+            {
+                Board board = new Board(8, 8);
 
-            Screen.PrintBoard(board);
+                board.AddPiece(new Tower(Color.Black, board), new Position(0, 7));
+                board.AddPiece(new Tower(Color.Black, board), new Position(0, 0));
+                board.AddPiece(new King(Color.Black, board), new Position(2, 4));
 
+                Screen.PrintBoard(board);
+            }
+            catch (BoardException e)
+            {
+                Console.WriteLine(e.Message);
+            }
             Console.ReadKey();
         }
     }
