@@ -9,19 +9,23 @@ namespace ChessmateConsole
     {
         static void Main(string[] args)
         {
-            Console.Clear();
-
             try
             {
-                Board board = new Board(8, 8);
+                ChessGame game = new ChessGame();
 
-                board.AddPiece(new Tower(Color.Black, board), new Position(0, 7));
-                board.AddPiece(new Tower(Color.Black, board), new Position(0, 0));
-                board.AddPiece(new King(Color.Black, board), new Position(2, 4));
-                board.AddPiece(new King(Color.White, board), new Position(2, 3));
+                while (!game.Ending)
+                {
+                    Console.Clear();
+                    Screen.PrintBoard(game.Board);
 
+                    Console.WriteLine();
+                    Console.Write("Origem: ");
+                    Position origin = Screen.ReadPositionChess().ToPosition();
+                    Console.Write("Destino: ");
+                    Position destiny = Screen.ReadPositionChess().ToPosition();
 
-                Screen.PrintBoard(board);
+                    game.ExeMove(origin, destiny);
+                }
             }
             catch (BoardException e)
             {
