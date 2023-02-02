@@ -14,5 +14,10 @@ namespace GameBoard
             this.Board = board;
             this.NmbrOfMoves = 0; //Contador de movimentos de cada peça instânciada
         }
+
+        public void IncreaseNumMoves()
+        {
+            NmbrOfMoves++;
+        }
     }
 }
