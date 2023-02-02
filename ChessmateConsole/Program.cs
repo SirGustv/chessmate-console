@@ -11,11 +11,22 @@ namespace ChessmateConsole
         {
             Console.Clear();
 
-            ChessPosition pos = new ChessPosition('a', 8);
+            try
+            {
+                Board board = new Board(8, 8);
 
-            Console.WriteLine(pos);
-            Console.WriteLine(pos.ToPosition());
+                board.AddPiece(new Tower(Color.Black, board), new Position(0, 7));
+                board.AddPiece(new Tower(Color.Black, board), new Position(0, 0));
+                board.AddPiece(new King(Color.Black, board), new Position(2, 4));
+                board.AddPiece(new King(Color.White, board), new Position(2, 3));
 
+
+                Screen.PrintBoard(board);
+            }
+            catch (BoardException e)
+            {
+                Console.WriteLine(e.Message);
+            }
             Console.ReadKey();
         }
     }
