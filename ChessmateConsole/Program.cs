@@ -21,6 +21,13 @@ namespace ChessmateConsole
                     Console.WriteLine();
                     Console.Write("Origem: ");
                     Position origin = Screen.ReadPositionChess().ToPosition();
+
+                    bool[,] possiblePositions = game.Board.Piece(origin).PossibleMoves();
+
+                    Console.Clear();
+                    Screen.PrintBoard(game.Board, possiblePositions);
+
+                    Console.WriteLine();
                     Console.Write("Destino: ");
                     Position destiny = Screen.ReadPositionChess().ToPosition();
 

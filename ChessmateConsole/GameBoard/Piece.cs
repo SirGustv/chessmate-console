@@ -1,6 +1,6 @@
 namespace GameBoard
 {
-    public class Piece
+    public abstract class Piece
     {
         public Position Position { get; set; }
         public Color Color { get; set; }
@@ -14,6 +14,8 @@ namespace GameBoard
             this.Board = board;
             this.NmbrOfMoves = 0; //Contador de movimentos de cada peça instânciada
         }
+
+        public abstract bool[,] PossibleMoves();
 
         public void IncreaseNumMoves()
         {
