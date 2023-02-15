@@ -1,12 +1,14 @@
 using System;
 using GameBoard;
+using GameBoard.Excepitions;
+
 namespace Chessmate
 {
     public class ChessGame
     {
         public Board Board { get; private set; }
-        private int Turn;
-        private Color CurrentPlayer;
+        public int Turn { get; private set; }
+        public Color CurrentPlayer { get; private set; }
         public bool Ending { get; private set; }
 
         public ChessGame()
@@ -25,6 +27,50 @@ namespace Chessmate
             Piece catchPiece = Board.RemovePiece(destiny);
             Board.AddPiece(p, destiny);
         }
+
+        public void RealizeMove(Position origin, Position destiny)
+        {
+            ExeMove(origin, destiny);
+            Turn++;
+            ChangePlayer();
+        }
+
+        public void ValidOriginPosition(Position pos)
+        {
+            if (Board.Piece(pos) == null)
+            {
+                throw new BoardException("Não existe peça na posição de origem escolhida!");
+            }
+            if (CurrentPlayer != Board.Piece(pos).Color)
+            {
+                throw new BoardException("A peça de origem escolhida não é sua!");
+            }
+            if (!Board.Piece(pos).ExistPossibleMoves())
+            {
+                throw new BoardException("Não há movimentos possíveis para a peça de origem escolhida!");
+            }
+        }
+
+        public void ValidDestinyPosition(Position origin, Position destiny)
+        {
+            if (!Board.Piece(origin).CanMoveFor(destiny))
+            {
+                throw new BoardException("Posição de destino inválida!");
+            }
+        }
+
+        private void ChangePlayer()
+        {
+            if (CurrentPlayer == Color.White)
+            {
+                CurrentPlayer = Color.Black;
+            }
+            else
+            {
+                CurrentPlayer = Color.White;
+            }
+        }
+
 
         private void AddPiece()
         {

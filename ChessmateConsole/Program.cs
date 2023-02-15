@@ -15,23 +15,36 @@ namespace ChessmateConsole
 
                 while (!game.Ending)
                 {
-                    Console.Clear();
-                    Screen.PrintBoard(game.Board);
+                    try
+                    {
+                        Console.Clear();
+                        Screen.PrintBoard(game.Board);
+                        Console.WriteLine();
+                        Console.WriteLine("Turno: " + game.Turn);
+                        Console.WriteLine("Aguardando jogada: " + game.CurrentPlayer);
 
-                    Console.WriteLine();
-                    Console.Write("Origem: ");
-                    Position origin = Screen.ReadPositionChess().ToPosition();
+                        Console.WriteLine();
+                        Console.Write("Origem: ");
+                        Position origin = Screen.ReadPositionChess().ToPosition();
+                        game.ValidOriginPosition(origin);
 
-                    bool[,] possiblePositions = game.Board.Piece(origin).PossibleMoves();
+                        bool[,] possiblePositions = game.Board.Piece(origin).PossibleMoves();
 
-                    Console.Clear();
-                    Screen.PrintBoard(game.Board, possiblePositions);
+                        Console.Clear();
+                        Screen.PrintBoard(game.Board, possiblePositions);
 
-                    Console.WriteLine();
-                    Console.Write("Destino: ");
-                    Position destiny = Screen.ReadPositionChess().ToPosition();
+                        Console.WriteLine();
+                        Console.Write("Destino: ");
+                        Position destiny = Screen.ReadPositionChess().ToPosition();
+                        game.ValidDestinyPosition(origin, destiny);
 
-                    game.ExeMove(origin, destiny);
+                        game.RealizeMove(origin, destiny);
+                    }
+                    catch (BoardException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
             }
             catch (BoardException e)
