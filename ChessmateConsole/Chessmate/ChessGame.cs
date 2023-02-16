@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GameBoard;
 using GameBoard.Excepitions;
 
@@ -10,6 +11,8 @@ namespace Chessmate
         public int Turn { get; private set; }
         public Color CurrentPlayer { get; private set; }
         public bool Ending { get; private set; }
+        private HashSet<Piece> Pieces;
+        private HashSet<Piece> Catches;
 
         public ChessGame()
         {
@@ -17,6 +20,8 @@ namespace Chessmate
             Turn = 1;
             CurrentPlayer = Color.White;
             Ending = false;
+            Pieces = new HashSet<Piece>();
+            Catches = new HashSet<Piece>();
             AddPiece();
         }
 
@@ -26,6 +31,10 @@ namespace Chessmate
             p.IncreaseNumMoves();
             Piece catchPiece = Board.RemovePiece(destiny);
             Board.AddPiece(p, destiny);
+            if (catchPiece != null)
+            {
+                Catches.Add(catchPiece);
+            }
         }
 
         public void RealizeMove(Position origin, Position destiny)
@@ -71,22 +80,53 @@ namespace Chessmate
             }
         }
 
+        public HashSet<Piece> CatchesPieces(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece i in Catches)
+            {
+                if (i.Color == color)
+                {
+                    aux.Add(i);
+                }
+            }
+            return aux;
+        }
+        public HashSet<Piece> PiecesInGame(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece i in Catches)
+            {
+                if (i.Color == color)
+                {
+                    aux.Add(i);
+                }
+            }
+            aux.ExceptWith(CatchesPieces(color));
+            return aux;
+        }
+
+        public void AddNewPiece(char column, int line, Piece piece)
+        {
+            Board.AddPiece(piece, new ChessPosition(column, line).ToPosition());
+            Pieces.Add(piece);
+        }
 
         private void AddPiece()
         {
-            Board.AddPiece(new Tower(Color.White, Board), new ChessPosition('c', 1).ToPosition());
-            Board.AddPiece(new Tower(Color.White, Board), new ChessPosition('c', 2).ToPosition());
-            Board.AddPiece(new Tower(Color.White, Board), new ChessPosition('d', 2).ToPosition());
-            Board.AddPiece(new Tower(Color.White, Board), new ChessPosition('e', 2).ToPosition());
-            Board.AddPiece(new Tower(Color.White, Board), new ChessPosition('e', 1).ToPosition());
-            Board.AddPiece(new King(Color.White, Board), new ChessPosition('d', 1).ToPosition());
+            AddNewPiece('c', 1, new Tower(Color.White, Board));
+            AddNewPiece('c', 2, new Tower(Color.White, Board));
+            AddNewPiece('d', 2, new Tower(Color.White, Board));
+            AddNewPiece('e', 2, new Tower(Color.White, Board));
+            AddNewPiece('e', 1, new Tower(Color.White, Board));
+            AddNewPiece('d', 1, new King(Color.White, Board));
 
-            Board.AddPiece(new Tower(Color.Black, Board), new ChessPosition('c', 7).ToPosition());
-            Board.AddPiece(new Tower(Color.Black, Board), new ChessPosition('c', 8).ToPosition());
-            Board.AddPiece(new Tower(Color.Black, Board), new ChessPosition('d', 7).ToPosition());
-            Board.AddPiece(new Tower(Color.Black, Board), new ChessPosition('e', 7).ToPosition());
-            Board.AddPiece(new Tower(Color.Black, Board), new ChessPosition('e', 8).ToPosition());
-            Board.AddPiece(new King(Color.Black, Board), new ChessPosition('d', 8).ToPosition());
+            AddNewPiece('c', 7, new Tower(Color.Black, Board));
+            AddNewPiece('c', 8, new Tower(Color.Black, Board));
+            AddNewPiece('d', 7, new Tower(Color.Black, Board));
+            AddNewPiece('e', 7, new Tower(Color.Black, Board));
+            AddNewPiece('e', 8, new Tower(Color.Black, Board));
+            AddNewPiece('d', 8, new King(Color.Black, Board));
         }
     }
 }

@@ -18,10 +18,7 @@ namespace ChessmateConsole
                     try
                     {
                         Console.Clear();
-                        Screen.PrintBoard(game.Board);
-                        Console.WriteLine();
-                        Console.WriteLine("Turno: " + game.Turn);
-                        Console.WriteLine("Aguardando jogada: " + game.CurrentPlayer);
+                        Screen.PrintGame(game);
 
                         Console.WriteLine();
                         Console.Write("Origem: ");

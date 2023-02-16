@@ -1,11 +1,46 @@
 using System;
 using GameBoard;
 using Chessmate;
+using System.Collections.Generic;
 
 namespace ChessmateConsole
 {
     public class Screen
     {
+        public static void PrintGame(ChessGame game)
+        {
+            PrintBoard(game.Board);
+            Console.WriteLine();
+            PrintCatchPieces(game);
+            Console.WriteLine();
+            Console.WriteLine("Turno: " + game.Turn);
+            Console.WriteLine("Aguardando jogada: " + game.CurrentPlayer);
+        }
+
+        public static void PrintCatchPieces(ChessGame game)
+        {
+            Console.WriteLine("Peças capturadas:");
+            Console.Write("White: ");
+            PrintGroup(game.CatchesPieces(Color.White));
+            Console.WriteLine();
+            Console.Write("Black: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            PrintGroup(game.CatchesPieces(Color.Black));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        public static void PrintGroup(HashSet<Piece> group)
+        {
+            Console.Write("[ ");
+            foreach (Piece x in group)
+            {
+                Console.Write(x + " ");
+            }
+            Console.Write("]");
+        }
+
         public static void PrintBoard(Board board)
         {
             for (int i = 0; i < board.Lines; i++)
