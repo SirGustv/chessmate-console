@@ -15,6 +15,10 @@ namespace ChessmateConsole
             Console.WriteLine();
             Console.WriteLine("Turno: " + game.Turn);
             Console.WriteLine("Aguardando jogada: " + game.CurrentPlayer);
+            if (game.Check)
+            {
+                Console.WriteLine("EM XEQUE!");
+            }
         }
 
         public static void PrintCatchPieces(ChessGame game)

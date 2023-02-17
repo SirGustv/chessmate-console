@@ -16,9 +16,14 @@ namespace GameBoard
         }
 
 
-        public void IncreaseNumMoves()
+        public void IncrementNumMoves()
         {
             NmbrOfMoves++;
+        }
+
+        public void DecrementNumMoves()
+        {
+            NmbrOfMoves--;
         }
 
         public bool ExistPossibleMoves()
