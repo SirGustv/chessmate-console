@@ -43,6 +43,8 @@ namespace ChessmateConsole
                         Console.ReadLine();
                     }
                 }
+                Console.Clear();
+                Screen.PrintGame(game);
             }
             catch (BoardException e)
             {
