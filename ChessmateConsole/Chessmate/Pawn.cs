@@ -58,6 +58,21 @@ namespace Chessmate
                 {
                     mat[pos.Line, pos.Column] = true;
                 }
+
+                //JogadaEspecial En Passant
+                if (Position.Line == 3)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if (Board.ValidPosition(left) && ThereEnemy(left) && Board.Piece(left) == Game.VunerableEnPassant)
+                    {
+                        mat[left.Line - 1, left.Column] = true;
+                    }
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.ValidPosition(right) && ThereEnemy(right) && Board.Piece(right) == Game.VunerableEnPassant)
+                    {
+                        mat[right.Line - 1, right.Column] = true;
+                    }
+                }
             }
             else
             {
@@ -85,8 +100,22 @@ namespace Chessmate
                 {
                     mat[pos.Line, pos.Column] = true;
                 }
-            }
 
+                //JogadaEspecial En Passant
+                if (Position.Line == 4)
+                {
+                    Position left = new Position(Position.Line, Position.Column - 1);
+                    if (Board.ValidPosition(left) && ThereEnemy(left) && Board.Piece(left) == Game.VunerableEnPassant)
+                    {
+                        mat[left.Line + 1, left.Column] = true;
+                    }
+                    Position right = new Position(Position.Line, Position.Column + 1);
+                    if (Board.ValidPosition(right) && ThereEnemy(right) && Board.Piece(right) == Game.VunerableEnPassant)
+                    {
+                        mat[right.Line + 1, right.Column] = true;
+                    }
+                }
+            }
             return mat;
         }
     }

@@ -14,6 +14,7 @@ namespace Chessmate
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Catches;
         public bool Check { get; private set; }
+        public Piece VunerableEnPassant { get; private set; }
 
         public ChessGame()
         {
@@ -22,6 +23,7 @@ namespace Chessmate
             CurrentPlayer = Color.White;
             Ending = false;
             Check = false;
+            VunerableEnPassant = null;
             Pieces = new HashSet<Piece>();
             Catches = new HashSet<Piece>();
             AddPiece();
@@ -58,6 +60,25 @@ namespace Chessmate
                 Board.AddPiece(Twr, destinyTwr);
             }
 
+            //JogadaEspecia En Passant
+            if (p is Pawn)
+            {
+                if (origin.Column != destiny.Column && catchPiece == null)
+                {
+                    Position posPwn;
+                    if (p.Color == Color.White)
+                    {
+                        posPwn = new Position(3, destiny.Column);
+                    }
+                    else
+                    {
+                        posPwn = new Position(4, destiny.Column);
+                    }
+                    catchPiece = Board.RemovePiece(posPwn);
+                    Catches.Add(catchPiece);
+                }
+            }
+
             return catchPiece;
         }
 
@@ -91,6 +112,25 @@ namespace Chessmate
                 Twr.DecrementNumMoves();
                 Board.AddPiece(Twr, originTwr);
             }
+
+            //#JogadaEspecial En Passant
+            if (p is Pawn)
+            {
+                if (origin.Column != destiny.Column && catchPiece == VunerableEnPassant)
+                {
+                    Piece pawn = Board.RemovePiece(destiny);
+                    Position posPwn;
+                    if (p.Color == Color.White)
+                    {
+                        posPwn = new Position(3, destiny.Column);
+                    }
+                    else
+                    {
+                        posPwn = new Position(4, destiny.Column);
+                    }
+                    Board.AddPiece(pawn, posPwn);
+                }
+            }
         }
 
         public void RealizeMove(Position origin, Position destiny)
@@ -119,6 +159,18 @@ namespace Chessmate
             {
                 Turn++;
                 ChangePlayer();
+            }
+
+            Piece p = Board.Piece(destiny);
+
+            //#JogadaEspecial En Passant
+            if (p is Pawn && (destiny.Line == origin.Line - 2 || destiny.Line == origin.Line + 2))
+            {
+                VunerableEnPassant = p;
+            }
+            else
+            {
+                VunerableEnPassant = null;
             }
         }
 
