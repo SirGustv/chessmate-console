@@ -37,6 +37,27 @@ namespace Chessmate
             {
                 Catches.Add(catchPiece);
             }
+
+            //#JogadaEspecial Roque Pequeno
+            if (p is King && destiny.Column == origin.Column + 2)
+            {
+                Position originTwr = new Position(origin.Line, origin.Column + 3);
+                Position destinyTwr = new Position(origin.Line, origin.Column + 1);
+                Piece Twr = Board.RemovePiece(originTwr);
+                Twr.IncrementNumMoves();
+                Board.AddPiece(Twr, destinyTwr);
+            }
+
+            //#JogadaEspecial Roque Grande
+            if (p is King && destiny.Column == origin.Column - 2)
+            {
+                Position originTwr = new Position(origin.Line, origin.Column - 4);
+                Position destinyTwr = new Position(origin.Line, origin.Column - 1);
+                Piece Twr = Board.RemovePiece(originTwr);
+                Twr.IncrementNumMoves();
+                Board.AddPiece(Twr, destinyTwr);
+            }
+
             return catchPiece;
         }
 
@@ -50,6 +71,26 @@ namespace Chessmate
                 Catches.Remove(catchPiece);
             }
             Board.AddPiece(p, origin);
+
+            //#JogadaEspecial Roque Pequeno
+            if (p is King && destiny.Column == origin.Column + 2)
+            {
+                Position originTwr = new Position(origin.Line, origin.Column + 3);
+                Position destinyTwr = new Position(origin.Line, origin.Column + 1);
+                Piece Twr = Board.RemovePiece(destinyTwr);
+                Twr.DecrementNumMoves();
+                Board.AddPiece(Twr, originTwr);
+            }
+
+            //#JogadaEspecial Roque Grande
+            if (p is King && destiny.Column == origin.Column - 2)
+            {
+                Position originTwr = new Position(origin.Line, origin.Column - 4);
+                Position destinyTwr = new Position(origin.Line, origin.Column - 1);
+                Piece Twr = Board.RemovePiece(destinyTwr);
+                Twr.DecrementNumMoves();
+                Board.AddPiece(Twr, originTwr);
+            }
         }
 
         public void RealizeMove(Position origin, Position destiny)
@@ -228,7 +269,7 @@ namespace Chessmate
             AddNewPiece('b', 1, new Horse(Color.White, Board));
             AddNewPiece('c', 1, new Bishop(Color.White, Board));
             AddNewPiece('d', 1, new Queen(Color.White, Board));
-            AddNewPiece('e', 1, new King(Color.White, Board));
+            AddNewPiece('e', 1, new King(Color.White, Board, this));
             AddNewPiece('f', 1, new Bishop(Color.White, Board));
             AddNewPiece('g', 1, new Horse(Color.White, Board));
             AddNewPiece('h', 1, new Tower(Color.White, Board));
@@ -245,7 +286,7 @@ namespace Chessmate
             AddNewPiece('a', 8, new Tower(Color.Black, Board));
             AddNewPiece('c', 8, new Bishop(Color.Black, Board));
             AddNewPiece('d', 8, new Queen(Color.Black, Board));
-            AddNewPiece('e', 8, new King(Color.Black, Board));
+            AddNewPiece('e', 8, new King(Color.Black, Board, this));
             AddNewPiece('f', 8, new Bishop(Color.Black, Board));
             AddNewPiece('g', 8, new Horse(Color.Black, Board));
             AddNewPiece('h', 8, new Tower(Color.Black, Board));
