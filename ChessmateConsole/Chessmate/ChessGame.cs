@@ -143,6 +143,21 @@ namespace Chessmate
                 throw new BoardException("Você não pode se colocar em xeque!");
             }
 
+            Piece p = Board.Piece(destiny);
+
+            //#JogadaEspecial Promoção
+            if (p is Pawn)
+            {
+                if ((p.Color == Color.White && destiny.Line == 0) || (p.Color == Color.Black && destiny.Line == 7))
+                {
+                    p = Board.RemovePiece(destiny);
+                    Pieces.Remove(p);
+                    Piece queen = new Queen(p.Color, Board);
+                    Board.AddPiece(queen, destiny);
+                    Pieces.Add(queen);
+                }
+            }
+
             if (InCheck(Opponent(CurrentPlayer)))
             {
                 Check = true;
@@ -160,8 +175,6 @@ namespace Chessmate
                 Turn++;
                 ChangePlayer();
             }
-
-            Piece p = Board.Piece(destiny);
 
             //#JogadaEspecial En Passant
             if (p is Pawn && (destiny.Line == origin.Line - 2 || destiny.Line == origin.Line + 2))
