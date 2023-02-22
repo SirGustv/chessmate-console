@@ -71,7 +71,7 @@ namespace ChessmateConsole
         public static void PrintBoard(Board board, bool[,] possiblePositions)
         {
             ConsoleColor originalBackground = Console.BackgroundColor;
-            ConsoleColor altBackground = ConsoleColor.Magenta;
+            ConsoleColor altBackground = ConsoleColor.Yellow;
 
             for (int i = 0; i < board.Lines; i++)
             {

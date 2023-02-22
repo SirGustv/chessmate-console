@@ -40,7 +40,18 @@ namespace ChessmateConsole
                     catch (BoardException e)
                     {
                         Console.WriteLine(e.Message);
-                        Console.ReadLine();
+                        Console.ReadKey();
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Digite um formato válido! (coluna(a-h)linha(1-8))");
+                        Console.ReadKey();
+
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        Console.WriteLine("Digite um formato válido! (coluna(a-h)linha(1-8))");
+                        Console.ReadKey();
                     }
                 }
                 Console.Clear();
