@@ -56,16 +56,22 @@ namespace ChessmateConsole
 
         public static void PrintBoard(Board board)
         {
+            ConsoleColor aux = Console.ForegroundColor;
+
             for (int i = 0; i < board.Lines; i++)
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write(8 - i + " ");
+                Console.ForegroundColor = aux;
                 for (int j = 0; j < board.Columns; j++)
                 {
                     PrintPiece(board.Piece(i, j));
                 }
                 Console.WriteLine();
             }
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("  a b c d e f g h");
+            Console.ForegroundColor = aux;
         }
 
         public static void PrintBoard(Board board, bool[,] possiblePositions)
