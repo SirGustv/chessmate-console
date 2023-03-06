@@ -78,10 +78,13 @@ namespace ChessmateConsole
         {
             ConsoleColor originalBackground = Console.BackgroundColor;
             ConsoleColor altBackground = ConsoleColor.Yellow;
+            ConsoleColor aux = Console.ForegroundColor;
 
             for (int i = 0; i < board.Lines; i++)
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write(8 - i + " ");
+                Console.ForegroundColor = aux;
                 for (int j = 0; j < board.Columns; j++)
                 {
                     if (possiblePositions[i, j])
@@ -97,7 +100,9 @@ namespace ChessmateConsole
                 }
                 Console.WriteLine();
             }
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("  a b c d e f g h");
+            Console.ForegroundColor = aux;
             Console.BackgroundColor = originalBackground;
         }
 
