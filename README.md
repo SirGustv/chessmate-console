@@ -41,7 +41,7 @@
 $ git clone git@github.com:SirGustv/chessmate-console.git
 
 #Vá para a pasta do projeto no terminal/cmd
-$ cd chessmate-console\ChessmateConsole
+$ cd chessmate-console/ChessmateConsole
 
 #Baixe as dependências
 $ dotnet build
